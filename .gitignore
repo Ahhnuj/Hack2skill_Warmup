@@ -4,7 +4,6 @@
 .env.*.local
 
 # Local tooling
-.vercel/
 node_modules/
 
 # OS / editor
