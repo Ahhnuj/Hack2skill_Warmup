@@ -1,12 +1,16 @@
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+const express = require('express');
+const path = require('path');
 
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.post('/api/generate', async (req, res) => {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return res.status(500).json({
-      error: 'Server missing ANTHROPIC_API_KEY. Add it in Vercel → Settings → Environment Variables.',
+      error: 'Server missing ANTHROPIC_API_KEY. Add it in Render → Environment → Environment Variables.',
     });
   }
 
@@ -42,4 +46,12 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Proxy request failed' });
   }
-}
+});
+
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'cooking-todo.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Cooking To-Do running on port ${PORT}`);
+});

@@ -3,8 +3,9 @@
 .env.local
 .env.*.local
 
-# Local Vercel
+# Local tooling
 .vercel/
+node_modules/
 
 # OS / editor
 .DS_Store
